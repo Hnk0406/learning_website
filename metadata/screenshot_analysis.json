@@ -1,0 +1,206 @@
+{
+  "pages": [
+    {
+      "pageName": "login-light",
+      "dominantColors": ["#f5f7fb", "#ffffff", "#2f55d4"],
+      "backgroundColors": ["#f5f7fb", "#ffffff"],
+      "textColors": ["#1f2430", "#7b8190"],
+      "gradients": [],
+      "borderRadii": {
+        "cards": 12,
+        "buttons": 8,
+        "inputs": 8
+      },
+      "spacingScalePx": [4, 8, 12, 16, 24, 32, 48],
+      "fontFamilies": ["Poppins", "Segoe UI", "system-ui"],
+      "commonComponents": [
+        "two-column-auth-layout",
+        "navbar-logo",
+        "text-input",
+        "password-input-with-toggle-icon",
+        "primary-button",
+        "inline-link"
+      ]
+    },
+    {
+      "pageName": "login-dark",
+      "dominantColors": ["#0b1724", "#121826", "#2f55d4"],
+      "backgroundColors": ["#0b1724", "#121826"],
+      "textColors": ["#ffffff", "#9ca3b5"],
+      "gradients": [],
+      "borderRadii": {
+        "cards": 12,
+        "buttons": 8,
+        "inputs": 8
+      },
+      "spacingScalePx": [4, 8, 12, 16, 24, 32, 48],
+      "fontFamilies": ["Poppins", "Segoe UI", "system-ui"],
+      "commonComponents": [
+        "two-column-auth-layout",
+        "navbar-logo",
+        "dark-mode-toggle",
+        "text-input",
+        "password-input-with-toggle-icon",
+        "primary-button",
+        "inline-link"
+      ]
+    },
+    {
+      "pageName": "dashboard",
+      "dominantColors": ["#f5f7fb", "#ffffff", "#2f55d4", "#f54ea2"],
+      "backgroundColors": ["#f5f7fb", "#ffffff"],
+      "textColors": ["#1f2430", "#7b8190", "#2f55d4"],
+      "gradients": ["linear-gradient(90deg,#f54ea2,#ff7676,#ff9a44)"] ,
+      "borderRadii": {
+        "cards": 12,
+        "profile-pill": 999,
+        "buttons": 8
+      },
+      "spacingScalePx": [4, 8, 12, 16, 24, 32, 48],
+      "fontFamilies": ["Poppins", "Segoe UI", "system-ui"],
+      "commonComponents": [
+        "top-navbar-with-logo-and-icons",
+        "stats-summary-cards",
+        "horizontal-scroll-news-cards",
+        "course-progress-cards",
+        "icon-with-label-row",
+        "section-headers-with-link"
+      ]
+    },
+    {
+      "pageName": "courses",
+      "dominantColors": ["#f5f7fb", "#ffffff", "#2f55d4"],
+      "backgroundColors": ["#f5f7fb"],
+      "textColors": ["#1f2430", "#7b8190"],
+      "gradients": ["linear-gradient(90deg,#f54ea2,#ff7676,#ff9a44)"],
+      "borderRadii": {
+        "filter-chips": 999,
+        "course-cards": 12,
+        "tabs": 999
+      },
+      "spacingScalePx": [4, 8, 12, 16, 24, 32, 48],
+      "fontFamilies": ["Poppins", "Segoe UI", "system-ui"],
+      "commonComponents": [
+        "search-bar-with-icon",
+        "gradient-announcement-banner",
+        "tab-strip",
+        "pill-filters",
+        "course-card-grid",
+        "rating-row-with-star-icon",
+        "favorite-heart-icon"
+      ]
+    },
+    {
+      "pageName": "super-batch",
+      "dominantColors": ["#f5f7fb", "#ffffff", "#2f55d4"],
+      "backgroundColors": ["#f5f7fb"],
+      "textColors": ["#1f2430", "#7b8190"],
+      "gradients": ["linear-gradient(90deg,#f54ea2,#ff7676,#ff9a44)"],
+      "borderRadii": {
+        "cards": 12,
+        "buttons": 8
+      },
+      "spacingScalePx": [4, 8, 12, 16, 24, 32, 48],
+      "fontFamilies": ["Poppins", "Segoe UI", "system-ui"],
+      "commonComponents": [
+        "batch-highlight-card",
+        "schedule-list",
+        "primary-cta-button",
+        "tag-pills"
+      ]
+    },
+    {
+      "pageName": "focus-mode",
+      "dominantColors": ["#0b1724", "#121826", "#2f55d4"],
+      "backgroundColors": ["#0b1724"],
+      "textColors": ["#ffffff", "#9ca3b5"],
+      "gradients": [],
+      "borderRadii": {
+        "video-player": 16,
+        "control-buttons": 999
+      },
+      "spacingScalePx": [4, 8, 12, 16, 24, 32, 48],
+      "fontFamilies": ["Poppins", "Segoe UI", "system-ui"],
+      "commonComponents": [
+        "video-player-placeholder",
+        "playlist-sidebar",
+        "playback-controls-row",
+        "progress-bar"
+      ]
+    },
+    {
+      "pageName": "materials",
+      "dominantColors": ["#f5f7fb", "#ffffff"],
+      "backgroundColors": ["#f5f7fb"],
+      "textColors": ["#1f2430", "#7b8190"],
+      "gradients": [],
+      "borderRadii": {
+        "resource-cards": 12
+      },
+      "spacingScalePx": [4, 8, 12, 16, 24, 32, 48],
+      "fontFamilies": ["Poppins", "Segoe UI", "system-ui"],
+      "commonComponents": [
+        "resource-list-rows",
+        "icon-tag-badges",
+        "download-button"
+      ]
+    },
+    {
+      "pageName": "learn",
+      "dominantColors": ["#f5f7fb", "#ffffff", "#2f55d4"],
+      "backgroundColors": ["#f5f7fb"],
+      "textColors": ["#1f2430", "#7b8190"],
+      "gradients": [],
+      "borderRadii": {
+        "side-nav": 12,
+        "content-panels": 12
+      },
+      "spacingScalePx": [4, 8, 12, 16, 24, 32, 48],
+      "fontFamilies": ["Poppins", "Segoe UI", "system-ui"],
+      "commonComponents": [
+        "vertical-stepper",
+        "lesson-list",
+        "primary-cta-button",
+        "breadcrumb-header"
+      ]
+    },
+    {
+      "pageName": "favorites",
+      "dominantColors": ["#f5f7fb", "#ffffff", "#2f55d4"],
+      "backgroundColors": ["#f5f7fb"],
+      "textColors": ["#1f2430", "#7b8190", "#f54ea2"],
+      "gradients": [],
+      "borderRadii": {
+        "course-cards": 12,
+        "heart-icon-container": 999
+      },
+      "spacingScalePx": [4, 8, 12, 16, 24, 32, 48],
+      "fontFamilies": ["Poppins", "Segoe UI", "system-ui"],
+      "commonComponents": [
+        "course-card-grid",
+        "favorite-heart-icon",
+        "filter-chips"
+      ]
+    },
+    {
+      "pageName": "profile",
+      "dominantColors": ["#f5f7fb", "#ffffff", "#2f55d4"],
+      "backgroundColors": ["#f5f7fb"],
+      "textColors": ["#1f2430", "#7b8190"],
+      "gradients": [],
+      "borderRadii": {
+        "avatar": 999,
+        "cards": 12,
+        "buttons": 8
+      },
+      "spacingScalePx": [4, 8, 12, 16, 24, 32, 48],
+      "fontFamilies": ["Poppins", "Segoe UI", "system-ui"],
+      "commonComponents": [
+        "profile-header-card",
+        "stat-badges",
+        "settings-list",
+        "primary-cta-button"
+      ]
+    }
+  ]
+}
