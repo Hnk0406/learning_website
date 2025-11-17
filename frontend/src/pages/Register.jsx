@@ -1,6 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
+  const navigate = useNavigate(); // ← ADD THIS HOOK
+
+  const handleLogin = () => {
+    navigate('/login');
+  };
   return (
     <div
       style={{
@@ -62,7 +68,11 @@ export default function Register() {
           Register
         </button>
         <p style={{ marginTop: 16, fontSize: 12, color: 'var(--text-muted)' }}>
-          Already have an account? <span style={{ color: 'var(--primary)', fontWeight: 500 }}>Login</span>
+          Already have an account? <span 
+                style={{ color: 'var(--primary)', fontWeight: 500, cursor: 'pointer' }}
+                onClick={handleLogin}>
+            Login
+          </span>
         </p>
       </div>
     </div>

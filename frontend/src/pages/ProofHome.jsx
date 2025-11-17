@@ -35,7 +35,7 @@ function ProofHome() {
       >
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px' }}>
           <img
-            src="/assets/extracted/logo.png"
+            src="/assets/extracted/logo-upanishad.png"
             alt="UPANISHAD logo"
             style={{ height: 72, marginRight: 16 }}
           />
