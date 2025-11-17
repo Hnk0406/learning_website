@@ -21,43 +21,44 @@ function ProofHome() {
 
   // ADD THIS FUNCTION - Real API login
   const handleLogin = async () => {
-    if (!formData.username.trim() || !formData.password.trim()) {
-      setError('Please enter both username and password');
-      return;
-    }
+  if (!formData.username.trim() || !formData.password.trim()) {
+    setError('Please enter both username and password');
+    return;
+  }
 
-    try {
-      setError('');
+  try {
+    setError('');
+    
+    // MAKE SURE THIS URL IS CORRECT - should be port 5000
+    const response = await fetch('http://localhost:5000/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: formData.username,  // Use 'username' not 'email'
+        password: formData.password
+      }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      // Store authentication data
+      localStorage.setItem('isAuthenticated', 'true');
+      localStorage.setItem('currentUser', JSON.stringify(data.user));
+      localStorage.setItem('token', data.token);
       
-      const response = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: formData.username,
-          password: formData.password
-        }),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        // Store authentication data
-        localStorage.setItem('isAuthenticated', 'true');
-        localStorage.setItem('currentUser', JSON.stringify(data.user));
-        localStorage.setItem('token', data.token);
-        
-        console.log('Login successful:', data.user);
-        navigate('/dashboard');
-      } else {
-        setError(data.message || 'Login failed');
-      }
-    } catch (err) {
-      console.error('Login error:', err);
-      setError('Network error. Please check if backend is running.');
+      console.log('Login successful:', data.user);
+      navigate('/dashboard');
+    } else {
+      setError(data.message || 'Login failed');
     }
-  };
+  } catch (err) {
+    console.error('Login error:', err);
+    setError('Network error. Please check if backend is running.');
+  }
+};
 
   // ADD THIS FUNCTION - Handle register navigation
   const handleRegister = () => {

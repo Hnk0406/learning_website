@@ -6,6 +6,7 @@ const socialLinksSchema = new mongoose.Schema({
   portfolio: { type: String, trim: true }
 });
 
+// Add this to your userSchema in User.js
 const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true, maxlength: 80 },
@@ -18,7 +19,14 @@ const userSchema = new mongoose.Schema(
     phone: { type: String, trim: true, maxlength: 20 },
     location: { type: String, trim: true, maxlength: 80 },
     skills: [{ type: String, trim: true, maxlength: 40 }],
-    socialLinks: socialLinksSchema
+    socialLinks: socialLinksSchema,
+    // ADD FOCUS STATS HERE:
+    focusStats: {
+      totalFocusTime: { type: Number, default: 0 },
+      completedPomodoros: { type: Number, default: 0 },
+      longestStreak: { type: Number, default: 0 },
+      currentStreak: { type: Number, default: 0 }
+    }
   },
   { timestamps: true }
 );
