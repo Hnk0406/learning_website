@@ -82,3 +82,88 @@ body {
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+/* Dark Theme Variables */
+[data-theme="dark"] {
+  --background-dark: #0f172a;
+  --background-light: #1e293b;
+  --text-light: #f1f5f9;
+  --text-muted-dark: #94a3b8;
+  --border-dark: #334155;
+  --hover-dark: #1e293b;
+  
+  /* Override existing light theme variables for dark mode */
+  --background-light: #0f172a;
+  --text-dark: #f1f5f9;
+  --text-muted: #94a3b8;
+  --border-subtle: #334155;
+}
+
+/* High Contrast Dark Theme */
+[data-theme="dark"] {
+  /* Backgrounds - All white becomes black */
+  --background-dark: #000000;
+  --background-light: #000000;
+  
+  /* Text - All text becomes white */
+  --text-light: #ffffff;
+  --text-dark: #ffffff;
+  --text-muted: #ffffff;
+  --text-muted-dark: #ffffff;
+  
+  /* Borders */
+  --border-dark: #ffffff;
+  --border-subtle: #ffffff;
+  
+  /* Interactive states */
+  --hover-dark: #333333;
+  --primary-light: #333333;
+}
+
+/* Apply high contrast to entire app */
+[data-theme="dark"] body {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .app-shell {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* Ensure all containers have black background */
+[data-theme="dark"] div {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* Ensure all text is white */
+[data-theme="dark"] * {
+  color: #ffffff !important;
+}
+
+/* But keep images and specific elements intact */
+[data-theme="dark"] img {
+  filter: invert(1) brightness(2);
+}
+
+/* Input fields and form elements */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid #ffffff !important;
+}
+
+/* Cards and containers with white background */
+[data-theme="dark"] [style*="background"],
+[data-theme="dark"] [class*="card"],
+[data-theme="dark"] [class*="container"] {
+  background: #000000 !important;
+  border: 1px solid #ffffff !important;
+}
+
+/* Smooth transitions */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+}

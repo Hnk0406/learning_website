@@ -287,23 +287,6 @@ function ProofHome() {
               </span>
             </span>
           </div>
-
-          {/* ADD DEMO CREDENTIALS HINT */}
-          <div
-            style={{
-              marginTop: 24,
-              padding: 12,
-              background: '#f0f9ff',
-              border: '1px solid #bae6fd',
-              borderRadius: 'var(--radius-md)',
-              fontSize: 11,
-              color: '#0369a1'
-            }}
-          >
-            <strong>Demo credentials:</strong><br />
-            Username: admin | Password: password123<br />
-            Username: user | Password: user123
-          </div>
         </div>
       </div>
     </div>
