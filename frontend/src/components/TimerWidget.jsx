@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const TimerWidget = ({ mode }) => {
+const TimerWidget = ({ mode, onSessionComplete }) => { // ← ADD onSessionComplete prop
   const [timerTime, setTimerTime] = useState(25 * 60); // 25 minutes in seconds
   const [stopwatchTime, setStopwatchTime] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
@@ -48,6 +48,16 @@ const TimerWidget = ({ mode }) => {
 
   const handleTimerEnd = () => {
     setIsTimerRunning(false);
+    
+    // ADD THIS: Call session complete when timer naturally ends
+    if (onSessionComplete) {
+      onSessionComplete({
+        duration: 25 * 60, // 25 minutes in seconds
+        type: 'pomodoro',
+        mode: 'Timer'
+      });
+    }
+    
     if (endSoundRef.current) {
       endSoundRef.current.play();
     }
@@ -73,6 +83,19 @@ const TimerWidget = ({ mode }) => {
 
   const handleStopTimer = () => {
     setIsTimerRunning(false);
+    
+    // ADD THIS: Call session complete when user stops timer manually
+    if (onSessionComplete && timerTime < (25 * 60)) { // Only if some time has passed
+      const timeSpent = (25 * 60) - timerTime;
+      if (timeSpent > 0) {
+        onSessionComplete({
+          duration: timeSpent,
+          type: 'pomodoro',
+          mode: 'Timer'
+        });
+      }
+    }
+    
     if (bgmSoundRef.current) {
       bgmSoundRef.current.pause();
       bgmSoundRef.current.currentTime = 0;
@@ -99,6 +122,15 @@ const TimerWidget = ({ mode }) => {
 
   const handleStopStopwatch = () => {
     setIsStopwatchRunning(false);
+    
+    // ADD THIS: Call session complete when stopwatch is stopped
+    if (onSessionComplete && stopwatchTime > 0) {
+      onSessionComplete({
+        duration: stopwatchTime,
+        type: 'stopwatch',
+        mode: 'Stopwatch'
+      });
+    }
   };
 
   const handleResetStopwatch = () => {
