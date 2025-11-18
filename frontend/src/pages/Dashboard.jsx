@@ -4,6 +4,17 @@ import SearchBar from '../components/SearchBar.jsx';
 import CourseCard from '../components/CourseCard.jsx';
 
 export default function Dashboard() {
+  // After successful login
+const userData = {
+  name: 'Aryabhatta',
+  email: 'aryabhatta@gmail.com'
+};
+
+// Save to localStorage
+localStorage.setItem('currentUser', JSON.stringify(userData));
+
+// Or if using Context
+setUser(userData);
   return (
     <div>
       <Navbar />

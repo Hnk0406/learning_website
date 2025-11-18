@@ -1,70 +1,147 @@
-import React from 'react';
-import Navbar from '../components/Navbar.jsx';
-import Sidebar from '../components/Sidebar.jsx';
+import React, { useState } from "react";
 
 export default function Learn() {
+  const [openIndex, setOpenIndex] = useState(0);
+  const [activeLesson, setActiveLesson] = useState("Introduction to HTML");
+
+  const sections = [
+    {
+      title: "HTML Basics",
+      lessons: ["Introduction to HTML", "Elements & Tags", "Forms"],
+    },
+    {
+      title: "CSS Fundamentals",
+      lessons: ["Selectors", "Flexbox", "Grid"],
+    },
+    {
+      title: "JavaScript",
+      lessons: ["Variables", "Functions", "Scope"],
+    },
+  ];
+
   return (
-    <div>
-      <Navbar />
-      <div style={{ display: 'flex', minHeight: 'calc(100vh - var(--nav-height))' }}>
-        <Sidebar />
-        <main
+    <div
+      style={{
+        maxWidth: "1000px",
+        margin: "0 auto",
+        display: "flex",
+        gap: "24px",
+      }}
+    >
+      {/* LEFT CONTENT NAVIGATION (Original Sidebar restored) */}
+      <div
+        style={{
+          width: "260px",
+          background: "#fff",
+          borderRadius: "12px",
+          padding: "16px",
+          height: "fit-content",
+          boxShadow: "var(--shadow-soft)",
+        }}
+      >
+        <h3>Course Content</h3>
+
+        {sections.map((section, i) => {
+          const open = openIndex === i;
+          return (
+            <div key={i} style={{ marginBottom: "10px" }}>
+              <button
+                onClick={() => setOpenIndex(open ? -1 : i)}
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  border: "none",
+                  background: open ? "var(--primary-light)" : "transparent",
+                  borderRadius: "8px",
+                  textAlign: "left",
+                  fontWeight: "600",
+                }}
+              >
+                {section.title}
+              </button>
+
+              {open && (
+                <ul style={{ paddingLeft: "12px", listStyle: "none", marginTop: "8px" }}>
+                  {section.lessons.map((lesson) => {
+                    const active = lesson === activeLesson;
+
+                    return (
+                      <li key={lesson}>
+                        <button
+                          onClick={() => setActiveLesson(lesson)}
+                          style={{
+                            padding: "8px 10px",
+                            width: "100%",
+                            border: "none",
+                            borderRadius: "6px",
+                            textAlign: "left",
+                            background: active ? "#e6e9ff" : "transparent",
+                            color: active ? "var(--primary)" : "#555",
+                          }}
+                        >
+                          {lesson}
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* RIGHT: VIDEO + COURSE INFO */}
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "20px" }}>
+        {/* VIDEO */}
+        <div
           style={{
-            flex: 1,
-            padding: 24,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 16,
-            background: '#f5f7fb'
+            height: "350px",
+            background: "#111",
+            borderRadius: "16px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "hidden",
           }}
         >
-          <section
-            style={{
-              flex: '0 0 auto',
-              borderRadius: 16,
-              background: '#111827',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-          >
-            <img
-              src="/assets/extracted/placeholder-video.svg"
-              alt="Video player placeholder"
-              style={{ width: '100%', maxWidth: 640, borderRadius: 16 }}
-            />
-          </section>
+          <img
+            src="/assets/extracted/placeholder-video.svg"
+            alt="video"
+            style={{ width: "90%", maxWidth: "700px" }}
+          />
+        </div>
 
-          <section
+        {/* PROGRESS BOX */}
+        <div
+          style={{
+            background: "#fff",
+            borderRadius: "12px",
+            padding: "16px",
+            boxShadow: "var(--shadow-soft)",
+          }}
+        >
+          <h2>{activeLesson}</h2>
+          <p style={{ color: "#999" }}>Course Progress</p>
+          <div
             style={{
-              borderRadius: 'var(--radius-lg)',
-              background: '#ffffff',
-              padding: 16,
-              boxShadow: 'var(--shadow-soft)'
+              width: "100%",
+              height: "6px",
+              background: "#e5e7eb",
+              borderRadius: "10px",
+              marginTop: "8px",
+              overflow: "hidden",
             }}
           >
-            <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 4 }}>Introduction to HTML</div>
-            <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Course Progress</div>
             <div
               style={{
-                marginTop: 8,
-                height: 6,
-                borderRadius: 999,
-                background: '#e5e7eb',
-                overflow: 'hidden'
+                width: "40%",
+                height: "100%",
+                background: "var(--primary)",
               }}
-            >
-              <div
-                style={{
-                  width: '40%',
-                  height: '100%',
-                  borderRadius: 999,
-                  background: 'var(--primary)'
-                }}
-              />
-            </div>
-          </section>
-        </main>
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

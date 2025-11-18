@@ -1,62 +1,32 @@
-import React from 'react';
-import Navbar from '../components/Navbar.jsx';
+import React from "react";
 
 export default function Materials() {
-  const rows = [
-    ['Lecture Slides', 'PDF', '12 MB'],
-    ['Practice Problems', 'PDF', '2 MB'],
-    ['Cheat Sheet', 'PDF', '500 KB']
-  ];
-
   return (
-    <div>
-      <Navbar />
-      <main className="screen-max-width" style={{ padding: '24px 16px 40px' }}>
-        <h1 style={{ fontSize: 18, marginBottom: 16 }}>Materials</h1>
-        <div
-          style={{
-            borderRadius: 'var(--radius-lg)',
-            background: '#ffffff',
-            boxShadow: 'var(--shadow-card)',
-            overflow: 'hidden'
-          }}
-        >
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-            <thead style={{ background: '#f9fafb' }}>
-              <tr>
-                <th style={{ textAlign: 'left', padding: '10px 16px', fontWeight: 500 }}>Name</th>
-                <th style={{ textAlign: 'left', padding: '10px 16px', fontWeight: 500 }}>Type</th>
-                <th style={{ textAlign: 'left', padding: '10px 16px', fontWeight: 500 }}>Size</th>
-                <th style={{ textAlign: 'right', padding: '10px 16px', fontWeight: 500 }}>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map(([name, type, size]) => (
-                <tr key={name} style={{ borderTop: '1px solid var(--border-subtle)' }}>
-                  <td style={{ padding: '10px 16px' }}>{name}</td>
-                  <td style={{ padding: '10px 16px', color: 'var(--text-muted)' }}>{type}</td>
-                  <td style={{ padding: '10px 16px', color: 'var(--text-muted)' }}>{size}</td>
-                  <td style={{ padding: '10px 16px', textAlign: 'right' }}>
-                    <button
-                      type="button"
-                      style={{
-                        padding: '6px 12px',
-                        borderRadius: 'var(--radius-md)',
-                        border: '1px solid var(--border-subtle)',
-                        background: '#ffffff',
-                        fontSize: 12,
-                        cursor: 'pointer'
-                      }}
-                    >
-                      Download
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </main>
+    <div
+      style={{
+        maxWidth: "900px",
+        margin: "0 auto",
+        background: "#fff",
+        padding: "20px",
+        borderRadius: "12px",
+        boxShadow: "var(--shadow-soft)",
+      }}
+    >
+      <h2>Study Materials</h2>
+
+      <div style={{ marginTop: "12px", display: "flex", flexDirection: "column", gap: "12px" }}>
+        <a href="#" download style={materialStyle}>📄 HTML Notes.pdf</a>
+        <a href="#" download style={materialStyle}>📄 CSS Guide.pdf</a>
+        <a href="#" download style={materialStyle}>📄 JavaScript Handbook.pdf</a>
+      </div>
     </div>
   );
 }
+
+const materialStyle = {
+  padding: "12px",
+  background: "#f4f4f4",
+  borderRadius: "8px",
+  textDecoration: "none",
+  color: "#333",
+};

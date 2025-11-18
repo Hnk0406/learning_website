@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 
+// src/components/Navbar.jsx
 const navItems = [
   { label: 'Courses', path: '/courses' },
   { label: 'Super Batch', path: '/super-batch' },
-  { label: 'Focus Mode', path: '/focus-mode' }
+  { label: 'Focus Mode', path: '/focus-mode' },
+  { label: 'AI Assistant', path: '/ai-assistant' } 
 ];
 
 function Navbar() {

@@ -13,6 +13,8 @@ import Favorites from './pages/Favorites.jsx';
 import SuperBatch from './pages/SuperBatch.jsx';
 import FocusMode from './pages/FocusMode.jsx';
 import StyleGuide from './pages/StyleGuide.jsx';
+import AIAssistant from './pages/AIAssistant.jsx';
+
 
 function App() {
   return (
@@ -38,6 +40,7 @@ function App() {
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/super-batch" element={<SuperBatch />} />
         <Route path="/focus-mode" element={<FocusMode />} />
+        <Route path="/ai-assistant" element={<AIAssistant />} />
 
         {/* Style guide for verification */}
         <Route path="/style-guide" element={<StyleGuide />} />
