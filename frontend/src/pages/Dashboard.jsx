@@ -1,20 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar.jsx';
 import SearchBar from '../components/SearchBar.jsx';
 import CourseCard from '../components/CourseCard.jsx';
 
 export default function Dashboard() {
-  // After successful login
-const userData = {
-  name: 'Aryabhatta',
-  email: 'aryabhatta@gmail.com'
-};
+  const [currentUser, setCurrentUser] = useState(null);
 
-// Save to localStorage
-localStorage.setItem('currentUser', JSON.stringify(userData));
+  useEffect(() => {
+    // Check if user exists in localStorage
+    const userData = localStorage.getItem('currentUser');
+    if (userData) {
+      setCurrentUser(JSON.parse(userData));
+    } else {
+      // If no user exists, set default user (for demo purposes)
+      const defaultUser = {
+        name: 'Aryabhatta',
+        email: 'aryabhatta@gmail.com'
+      };
+      localStorage.setItem('currentUser', JSON.stringify(defaultUser));
+      setCurrentUser(defaultUser);
+    }
+  }, []);
 
-// Or if using Context
-setUser(userData);
+  // Show loading state while user data is being fetched
+  if (!currentUser) {
+    return (
+      <div>
+        <Navbar />
+        <main className="screen-max-width" style={{ padding: '24px 16px 40px' }}>
+          <div>Loading...</div>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div>
       <Navbar />
@@ -47,11 +66,11 @@ setUser(userData);
                 color: 'var(--primary)'
               }}
             >
-              A
+              {currentUser.name?.charAt(0) || 'U'}
             </div>
             <div>
-              <div style={{ fontSize: 16, fontWeight: 600 }}>Aryabhatta</div>
-              <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>aryabhatta@gmail.com</div>
+              <div style={{ fontSize: 16, fontWeight: 600 }}>{currentUser.name}</div>
+              <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{currentUser.email}</div>
             </div>
           </div>
           <div
