@@ -7,6 +7,9 @@ import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 
 import authRoutes from './routes/authRoutes.js';
+import courseRoutes from './routes/courseRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import progressRoutes from './routes/progressRoutes.js';
 
 dotenv.config();
 
@@ -35,6 +38,10 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/courses', courseRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/progress', progressRoutes);
 
 // Health check route
 app.get('/api/health', (req, res) => {
@@ -67,16 +74,16 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/upanis
 
 mongoose.connect(MONGODB_URI)
   .then(() => {
-    console.log('✅ Connected to MongoDB successfully');
+    console.log('Connected to MongoDB successfully');
   })
   .catch((error) => {
-    console.error('❌ MongoDB connection error:', error);
+    console.error('MongoDB connection error:', error);
     process.exit(1);
   });
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📱 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`Server running on port ${PORT}`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });

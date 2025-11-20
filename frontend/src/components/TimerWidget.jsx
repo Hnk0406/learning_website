@@ -1,18 +1,40 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const TimerWidget = ({ mode, onSessionComplete }) => { // ← ADD onSessionComplete prop
+const TimerWidget = ({ mode, onSessionComplete }) => {
   const [timerTime, setTimerTime] = useState(25 * 60); // 25 minutes in seconds
   const [stopwatchTime, setStopwatchTime] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [isStopwatchRunning, setIsStopwatchRunning] = useState(false);
   
-  // Refs for audio
+  // Refs for audio elements
   const endSoundRef = useRef(null);
   const bgmSoundRef = useRef(null);
   
   // Timer interval reference
   const timerIntervalRef = useRef(null);
   const stopwatchIntervalRef = useRef(null);
+
+  // Initialize audio when component mounts
+  useEffect(() => {
+    // Create audio objects
+    endSoundRef.current = new Audio("/audio/mixkit-airport-announcement-ding-1569.wav");
+    bgmSoundRef.current = new Audio("/audio/mixkit-tick-tock-clock-close-up-1059.wav");
+    
+    // Set audio properties
+    bgmSoundRef.current.loop = true;
+    endSoundRef.current.volume = 0.7;
+    bgmSoundRef.current.volume = 0.3;
+
+    // Cleanup on unmount
+    return () => {
+      if (endSoundRef.current) {
+        endSoundRef.current.pause();
+      }
+      if (bgmSoundRef.current) {
+        bgmSoundRef.current.pause();
+      }
+    };
+  }, []);
 
   // Timer countdown effect
   useEffect(() => {
@@ -49,7 +71,7 @@ const TimerWidget = ({ mode, onSessionComplete }) => { // ← ADD onSessionCompl
   const handleTimerEnd = () => {
     setIsTimerRunning(false);
     
-    // ADD THIS: Call session complete when timer naturally ends
+    // Call session complete when timer naturally ends
     if (onSessionComplete) {
       onSessionComplete({
         duration: 25 * 60, // 25 minutes in seconds
@@ -58,8 +80,11 @@ const TimerWidget = ({ mode, onSessionComplete }) => { // ← ADD onSessionCompl
       });
     }
     
+    // Play end sound and stop BGM
     if (endSoundRef.current) {
-      endSoundRef.current.play();
+      endSoundRef.current.play().catch(error => {
+        console.log('End sound play failed:', error);
+      });
     }
     if (bgmSoundRef.current) {
       bgmSoundRef.current.pause();
@@ -77,15 +102,17 @@ const TimerWidget = ({ mode, onSessionComplete }) => { // ← ADD onSessionCompl
   const handleStartTimer = () => {
     setIsTimerRunning(true);
     if (bgmSoundRef.current) {
-      bgmSoundRef.current.play();
+      bgmSoundRef.current.play().catch(error => {
+        console.log('BGM play failed:', error);
+      });
     }
   };
 
   const handleStopTimer = () => {
     setIsTimerRunning(false);
     
-    // ADD THIS: Call session complete when user stops timer manually
-    if (onSessionComplete && timerTime < (25 * 60)) { // Only if some time has passed
+    // Call session complete when user stops timer manually
+    if (onSessionComplete && timerTime < (25 * 60)) {
       const timeSpent = (25 * 60) - timerTime;
       if (timeSpent > 0) {
         onSessionComplete({
@@ -123,7 +150,7 @@ const TimerWidget = ({ mode, onSessionComplete }) => { // ← ADD onSessionCompl
   const handleStopStopwatch = () => {
     setIsStopwatchRunning(false);
     
-    // ADD THIS: Call session complete when stopwatch is stopped
+    // Call session complete when stopwatch is stopped
     if (onSessionComplete && stopwatchTime > 0) {
       onSessionComplete({
         duration: stopwatchTime,
@@ -145,123 +172,113 @@ const TimerWidget = ({ mode, onSessionComplete }) => { // ← ADD onSessionCompl
   }, [mode]);
 
   return (
-    <>
-      {/* Hidden audio elements */}
-      <audio ref={endSoundRef} id="end" preload="auto">
-        <source src="/assets/sounds/end-sound.mp3" type="audio/mpeg" />
-      </audio>
-      <audio ref={bgmSoundRef} id="bgm" preload="auto" loop>
-        <source src="/assets/sounds/background-music.mp3" type="audio/mpeg" />
-      </audio>
-
-      <div
-        style={{
-          borderRadius: 20,
-          background: 'rgba(15, 23, 42, 0.8)',
-          padding: 32,
-          boxShadow: 'var(--shadow-elevated)',
-          textAlign: 'center'
-        }}
-      >
-        <div style={{ fontSize: 12, opacity: 0.8, marginBottom: 8 }}>{mode}</div>
-        
-        {/* Dynamic Time Display */}
-        <div style={{ fontSize: 48, letterSpacing: '0.08em', marginBottom: 16 }}>
-          {mode === 'Timer' ? formatTime(timerTime) : formatTime(stopwatchTime)}
-        </div>
-        
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 12 }}>
-          {mode === 'Timer' ? (
-            <>
-              <button
-                type="button"
-                onClick={isTimerRunning ? handleStopTimer : handleStartTimer}
-                style={{
-                  padding: '10px 24px',
-                  borderRadius: 'var(--radius-pill)',
-                  border: 'none',
-                  background: isTimerRunning ? '#ef4444' : '#22c55e',
-                  color: '#0b1120',
-                  fontSize: 13,
-                  fontWeight: 600,
-                  cursor: 'pointer'
-                }}
-              >
-                {isTimerRunning ? 'STOP' : 'START'}
-              </button>
-              <button
-                type="button"
-                onClick={handleResetTimer}
-                style={{
-                  padding: '10px 24px',
-                  borderRadius: 'var(--radius-pill)',
-                  border: '1px solid rgba(148, 163, 184, 0.6)',
-                  background: 'transparent',
-                  color: '#e5e7eb',
-                  fontSize: 13,
-                  cursor: 'pointer'
-                }}
-              >
-                Reset
-              </button>
-            </>
-          ) : mode === 'Stopwatch' ? (
-            <>
-              <button
-                type="button"
-                onClick={isStopwatchRunning ? handleStopStopwatch : handleStartStopwatch}
-                style={{
-                  padding: '10px 24px',
-                  borderRadius: 'var(--radius-pill)',
-                  border: 'none',
-                  background: isStopwatchRunning ? '#ef4444' : '#22c55e',
-                  color: '#0b1120',
-                  fontSize: 13,
-                  fontWeight: 600,
-                  cursor: 'pointer'
-                }}
-              >
-                {isStopwatchRunning ? 'STOP' : 'START'}
-              </button>
-              <button
-                type="button"
-                onClick={handleResetStopwatch}
-                style={{
-                  padding: '10px 24px',
-                  borderRadius: 'var(--radius-pill)',
-                  border: '1px solid rgba(148, 163, 184, 0.6)',
-                  background: 'transparent',
-                  color: '#e5e7eb',
-                  fontSize: 13,
-                  cursor: 'pointer'
-                }}
-              >
-                Reset
-              </button>
-            </>
-          ) : (
-            // Alarms mode (placeholder)
-            <>
-              <button
-                type="button"
-                style={{
-                  padding: '10px 24px',
-                  borderRadius: 'var(--radius-pill)',
-                  border: 'none',
-                  background: '#22c55e',
-                  color: '#0b1120',
-                  fontSize: 13,
-                  fontWeight: 600,
-                  cursor: 'pointer'
-                }}
-              >
-                Set Alarm
-              </button>
-            </>
-          )}
-        </div>
+    <div
+      style={{
+        borderRadius: 20,
+        background: 'rgba(15, 23, 42, 0.8)',
+        padding: 32,
+        boxShadow: 'var(--shadow-elevated)',
+        textAlign: 'center'
+      }}
+    >
+      <div style={{ fontSize: 12, opacity: 0.8, marginBottom: 8 }}>{mode}</div>
+      
+      {/* Dynamic Time Display */}
+      <div style={{ fontSize: 48, letterSpacing: '0.08em', marginBottom: 16 }}>
+        {mode === 'Timer' ? formatTime(timerTime) : formatTime(stopwatchTime)}
       </div>
-    </>
+      
+      <div style={{ display: 'flex', justifyContent: 'center', gap: 12 }}>
+        {mode === 'Timer' ? (
+          <>
+            <button
+              type="button"
+              onClick={isTimerRunning ? handleStopTimer : handleStartTimer}
+              style={{
+                padding: '10px 24px',
+                borderRadius: 'var(--radius-pill)',
+                border: 'none',
+                background: isTimerRunning ? '#ef4444' : '#22c55e',
+                color: '#0b1120',
+                fontSize: 13,
+                fontWeight: 600,
+                cursor: 'pointer'
+              }}
+            >
+              {isTimerRunning ? 'STOP' : 'START'}
+            </button>
+            <button
+              type="button"
+              onClick={handleResetTimer}
+              style={{
+                padding: '10px 24px',
+                borderRadius: 'var(--radius-pill)',
+                border: '1px solid rgba(148, 163, 184, 0.6)',
+                background: 'transparent',
+                color: '#e5e7eb',
+                fontSize: 13,
+                cursor: 'pointer'
+              }}
+            >
+              Reset
+            </button>
+          </>
+        ) : mode === 'Stopwatch' ? (
+          <>
+            <button
+              type="button"
+              onClick={isStopwatchRunning ? handleStopStopwatch : handleStartStopwatch}
+              style={{
+                padding: '10px 24px',
+                borderRadius: 'var(--radius-pill)',
+                border: 'none',
+                background: isStopwatchRunning ? '#ef4444' : '#22c55e',
+                color: '#0b1120',
+                fontSize: 13,
+                fontWeight: 600,
+                cursor: 'pointer'
+              }}
+            >
+              {isStopwatchRunning ? 'STOP' : 'START'}
+            </button>
+            <button
+              type="button"
+              onClick={handleResetStopwatch}
+              style={{
+                padding: '10px 24px',
+                borderRadius: 'var(--radius-pill)',
+                border: '1px solid rgba(148, 163, 184, 0.6)',
+                background: 'transparent',
+                color: '#e5e7eb',
+                fontSize: 13,
+                cursor: 'pointer'
+              }}
+            >
+              Reset
+            </button>
+          </>
+        ) : (
+          // Alarms mode (placeholder)
+          <>
+            <button
+              type="button"
+              style={{
+                padding: '10px 24px',
+                borderRadius: 'var(--radius-pill)',
+                border: 'none',
+                background: '#22c55e',
+                color: '#0b1120',
+                fontSize: 13,
+                fontWeight: 600,
+                cursor: 'pointer'
+              }}
+            >
+              Set Alarm
+            </button>
+          </>
+        )}
+      </div>
+    </div>
   );
 };
 
